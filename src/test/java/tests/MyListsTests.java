@@ -2,10 +2,7 @@ package tests;
 
 import lib.CoreTestCase;
 import lib.Platform;
-import lib.ui.ArticlePageObject;
-import lib.ui.MyListsPageObject;
-import lib.ui.NavigationUI;
-import lib.ui.SearchPageObject;
+import lib.ui.*;
 import lib.ui.factories.ArticlePageObjectFactory;
 import lib.ui.factories.MyListsPageObjectFactory;
 import lib.ui.factories.NavigationUIFactory;
@@ -13,10 +10,14 @@ import lib.ui.factories.SearchPageObjectFactory;
 import org.junit.Test;
 
 public class MyListsTests extends CoreTestCase {
-    private static final
-    String name_of_folder = "Example folder";
-    String article_title_first = "Pixies (band)";
-    String article_title_second = "Nirvana (band)";
+    private static final String name_of_folder = "Example folder";
+    private static final String
+            login = "qawikiusername",
+            password = "qwerty123-";
+
+    private static final String
+            article_title_first = "Pixies (band)",
+            article_title_second = "Nirvana (band)";
 
     @Test
     public void testSaveFirstArticleToMyList()
@@ -24,7 +25,7 @@ public class MyListsTests extends CoreTestCase {
         SearchPageObject SearchPageObject = SearchPageObjectFactory.get(driver);
         SearchPageObject.initSearchInput();
         SearchPageObject.typeSearchLine("Java");
-        SearchPageObject.clickByArticleWithSubstring("Object-oriented programming language");
+        SearchPageObject.clickByArticleWithSubstring("bject-oriented programming language");
 
         ArticlePageObject ArticlePageObject = ArticlePageObjectFactory.get(driver);
         ArticlePageObject.waitForTitleElement();
@@ -39,10 +40,25 @@ public class MyListsTests extends CoreTestCase {
         if (Platform.getInstance().isIOS()) {
             ArticlePageObject.closeSyncSavedArticlesPopUp();
         }
+        if (Platform.getInstance().isMW()) {
+            AuthorisationPageObject Auth = new AuthorisationPageObject(driver);
+            Auth.clickAuthButton();
+            Auth.enterLoginData(login, password);
+            Auth.submitForm();
 
+            ArticlePageObject.waitForTitleElement();
+
+            assertEquals("We are not on the same page after login",
+                    article_title,
+                    ArticlePageObject.getArticleTitle()
+            );
+
+            ArticlePageObject.addArticlesToMySaved();
+        }
         ArticlePageObject.closeArticle();
 
         NavigationUI NavigationUI = NavigationUIFactory.get(driver);
+        NavigationUI.openNavigation();
         NavigationUI.clickMyLists();
 
         MyListsPageObject MyListsPageObject = MyListsPageObjectFactory.get(driver);
