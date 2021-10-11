@@ -1,6 +1,5 @@
 package lib.ui;
 
-import io.appium.java_client.AppiumDriver;
 import lib.Platform;
 import org.openqa.selenium.remote.RemoteWebDriver;
 
@@ -59,12 +58,12 @@ abstract public class MyListsPageObject extends MainPageObject
         this.waitForArticleToAppearByTitle(article_title);
         String article_xpath = getSavedArticleXpathByTitle(article_title);
 
-        if (Platform.getInstance().isIOS()) ||Platform.getInstance().isAndroid() {
+        if ((Platform.getInstance().isIOS()) || Platform.getInstance().isAndroid()) {
             this.swipeElementToLeft(
                     article_xpath,
                     "Cannot find saved article"
             );
-        } else{
+        } else {
             String remove_locator = getRemoveButtonByTitle(article_title);
             this.waitForElementAndClick(
                     remove_locator,

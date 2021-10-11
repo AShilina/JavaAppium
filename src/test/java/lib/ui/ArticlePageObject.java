@@ -1,6 +1,5 @@
 package lib.ui;
 
-import io.appium.java_client.AppiumDriver;
 import lib.Platform;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.RemoteWebDriver;
@@ -31,11 +30,13 @@ abstract public class ArticlePageObject extends MainPageObject {
         super(driver);
     }
 
-    public WebElement waitForTitleElement() {
+    public WebElement waitForTitleElement()
+    {
         return this.waitForElementPresent(TITLE, "Cannot find article title on page", 15);
     }
 
-    public String getArticleTitle() {
+    public String getArticleTitle()
+    {
         WebElement title_element = waitForTitleElement();
         if (Platform.getInstance().isAndroid()) {
             return title_element.getAttribute("text");
@@ -46,7 +47,8 @@ abstract public class ArticlePageObject extends MainPageObject {
         }
     }
 
-    public void swipeToFooter() {
+    public void swipeToFooter()
+    {
         if (Platform.getInstance().isAndroid()) {
             this.swipeUpToFindElement(
                     FOOTER_ELEMENT,
@@ -66,7 +68,8 @@ abstract public class ArticlePageObject extends MainPageObject {
         }
     }
 
-    public void addArticleToMyList(String name_of_folder) {
+    public void addArticleToMyList(String name_of_folder)
+    {
         this.waitForElementAndClick(
                 OPTIONS_BUTTON,
                 "Cannot find button to open article options",
@@ -105,7 +108,8 @@ abstract public class ArticlePageObject extends MainPageObject {
         );
     }
 
-    public void addArticleToExistingFolder(String name_of_folder) {
+    public void addArticleToExistingFolder(String name_of_folder)
+    {
         this.waitForElementAndClick(
                 OPTIONS_BUTTON,
                 "Cannot find button to open article options",
@@ -126,7 +130,8 @@ abstract public class ArticlePageObject extends MainPageObject {
         );
     }
 
-    public void addArticlesToMySaved() {
+    public void addArticlesToMySaved()
+    {
         if (Platform.getInstance().isMW()) {
             this.removeArticleFromSavedIfItAdded();
         }
@@ -148,7 +153,8 @@ abstract public class ArticlePageObject extends MainPageObject {
         }
     }
 
-    public void closeArticle() {
+    public void closeArticle()
+    {
         if (Platform.getInstance().isIOS() || Platform.getInstance().isAndroid()) {
             this.waitForElementAndClick(
                     CLOSE_ARTICLE_BUTTON,
@@ -164,7 +170,8 @@ abstract public class ArticlePageObject extends MainPageObject {
         this.assertElementPresent(TITLE, "Cannot find article title on page");
     }
 
-    public void closeSyncSavedArticlesPopUp() {
+    public void closeSyncSavedArticlesPopUp()
+    {
         this.waitForElementAndClick(
                 CLOSE_SAVED_ARTICLES_POPUP_BUTTON,
                 "Cannot find a button to close popup",
@@ -172,7 +179,8 @@ abstract public class ArticlePageObject extends MainPageObject {
         );
     }
 
-    public void assertArticleIsAddedToSaved() {
+    public void assertArticleIsAddedToSaved()
+    {
         if (Platform.getInstance().isAndroid()) {
             waitForElementAndClick(SAVED_ARTICLE_LABEL, "Cannot find saved article label", 5);
             waitForElementPresent(REMOVE_FROM_READING_LIST_OPTION, "The article doesn't seem to be saved. Cannot find 'Remove' option", 5);

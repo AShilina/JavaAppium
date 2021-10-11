@@ -8,7 +8,7 @@ public class MWArticlePageObject extends ArticlePageObject
     static {
         TITLE = "css:#content h1";
         FOOTER_ELEMENT = "css:footer";
-        OPTIONS_ADD_TO_MY_LIST_BUTTON = "css:#page-actions li#ca-watch.mw-ui-icon-mf-watch button";
+        OPTIONS_ADD_TO_MY_LIST_BUTTON = "css:[title='Watch']";
         OPTIONS_REMOVE_FROM_MY_LIST_BUTTON = "css:#page-actions li#ca-watch.mw-ui-icon-mf-watched watched button";
     }
 
