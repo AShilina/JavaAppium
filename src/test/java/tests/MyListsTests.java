@@ -83,15 +83,27 @@ public class MyListsTests extends CoreTestCase {
 
         if (Platform.getInstance().isAndroid()) {
             ArticlePageObject.addArticleToMyList(name_of_folder);
-        } else {
-            ArticlePageObject.addArticlesToMySaved();
         }
+        if (Platform.getInstance().isMW()) {
+            AuthorisationPageObject Auth = new AuthorisationPageObject(driver);
+            Auth.clickAuthButton();
+            Auth.enterLoginData(login, password);
+            Auth.submitForm();
+
+            ArticlePageObject.waitForTitleElement();
+            assertEquals("We are not on the same page after login",
+                    article_title_first,
+                    ArticlePageObject.getArticleTitle());
+        }
+
+        ArticlePageObject.addArticlesToMySaved();
 
         if (Platform.getInstance().isIOS()) {
             ArticlePageObject.closeSyncSavedArticlesPopUp();
         }
 
         ArticlePageObject.closeArticle();
+
         SearchPageObject.initSearchInput();
 
         if (Platform.getInstance().isIOS()) {

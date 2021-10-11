@@ -184,7 +184,9 @@ abstract public class ArticlePageObject extends MainPageObject {
         if (Platform.getInstance().isAndroid()) {
             waitForElementAndClick(SAVED_ARTICLE_LABEL, "Cannot find saved article label", 5);
             waitForElementPresent(REMOVE_FROM_READING_LIST_OPTION, "The article doesn't seem to be saved. Cannot find 'Remove' option", 5);
-        } else {
+        }
+
+        if ((Platform.getInstance().isIOS()) || Platform.getInstance().isMW()) {
             this.waitForElementPresent(
                     SAVED_ARTICLE_LABEL,
                     "The article doesn't seem to be saved"
